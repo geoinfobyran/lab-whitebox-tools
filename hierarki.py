@@ -11,7 +11,7 @@ def add_srs_vector(file, epsg=3006):
     split = file.split('.')
     split[0] += f'_{epsg}'
     newfile = '.'.join(split)
-    subprocess.run(['ogr2ogr', '-t_srs', f'EPSG:{epsg}', newfile, file])
+    subprocess.run(['ogr2ogr', '-a_srs', f'EPSG:{epsg}', newfile, file])
 
 wbt = WhiteboxTools()
 
