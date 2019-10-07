@@ -7,7 +7,9 @@ wbt = WhiteboxTools()
 
 work_dir = os.path.dirname(os.path.abspath(__file__))
 wb_dir = work_dir + "/WBT"
-data_dir = work_dir + "/data"
+# data_dir = work_dir + "/data"
+data_dir = "/home/johnnie/kod/flodesapp/localdata/geodata"
+
 out_dir = work_dir + "/out"
 
 wbt.set_whitebox_dir(wb_dir)
@@ -18,7 +20,7 @@ def run():
     outfile = f'{out_dir}/strahlerorderbasins/{omr}.tif'
     wbt.strahler_order_basins(
         f'{data_dir}/D8_Pointer/{omr}.dep',
-        f'{out_dir}/streams/{omr}.dep',
+        f'{data_dir}/Streams/{omr}.dep',
         outfile
     )
     add_srs=f'gdal_edit.py -a_srs EPSG:3006 {outfile}'
