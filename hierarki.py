@@ -18,12 +18,12 @@ wbt = WhiteboxTools()
 work_dir = os.path.dirname(os.path.abspath(__file__))
 wb_dir = work_dir + "/WBT"
 data_dir = "/home/johnnie/kod/flodesapp/localdata/geodata"
-out_dir = data_dir + "/out/hierarki_ab"
+out_dir = data_dir + "/out/hierarki_riks_50m"
 
 wbt.set_whitebox_dir(wb_dir)
 
-d8_pntr = f'{data_dir}/out/flowacc_ab/pntr.tif'
-flowacc = f'{data_dir}/out/flowacc_ab/accum.tif'
+d8_pntr = f'{data_dir}/out/flowacc_riks_50m/pntr.tif'
+flowacc = f'{data_dir}/out/flowacc_riks_50m/accum.tif'
 
 streams = f'{out_dir}/streams.tif'
 wbt.greater_than(

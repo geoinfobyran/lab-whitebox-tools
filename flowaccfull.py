@@ -28,12 +28,13 @@ def addSrs(file):
     os.system(add_srs)
 
 def run():
-    out_dem = f'{out_dir}/flowacc_ab/dem.tif'
-    out_pntr = f'{out_dir}/flowacc_ab/pntr.tif'
-    out_accum = f'{out_dir}/flowacc_ab/accum.tif'
+    dem = f'{data_dir}/DEM_LM/riks_50m_nowater2.tif'
+    out_dem = f'{out_dir}/flowacc_riks_50m/dem.tif'
+    out_pntr = f'{out_dir}/flowacc_riks_50m/pntr.tif'
+    out_accum = f'{out_dir}/flowacc_riks_50m/accum.tif'
 
     # wbt.breach_depressions(
-    #     f'{data_dir}/DEM_LM/ab_10m_nowater.tif', 
+    #     dem, 
     #     out_dem,
     #     fill_pits=True
     # )
@@ -51,7 +52,7 @@ def run():
 
 
     wbt.flow_accumulation_full_workflow(
-        f'{data_dir}/DEM_LM/ab_10m_nowater.tif',
+        dem,
         out_dem,
         out_pntr,
         out_accum,
