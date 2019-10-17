@@ -99,3 +99,60 @@ add_srs_vector(strahlerstreams_vector)
 
 subbasins_vector = f'{out_dir}/subbasins.shp'
 subprocess.run(['gdal_polygonize.py', subbasins, '-f', 'ESRI Shapefile', '-8', subbasins_vector])
+
+"""
+SQL:
+
+-- noda upp
+select pgr_nodenetwork('riks_50m.streamswithsubbasinid_3006', 1, 'strm_val', 'geom');
+select pgr_createtopology( 	'riks_50m.streamswithsubbasinid_3006_noded', 	1, 	'geom', 	'id', 	'source', 	'target' );
+
+-- basins med topo stream order
+select
+	basins.basin_id,
+	streams.topo_val,
+		basins.geom
+from
+	(
+		select topo.fid, sub.strm_val as basin_id, topo.strm_val as topo_val from riks_50m.topostream_3006 as topo
+		left join riks_50m.streamswithsubbasinid_3006 as sub
+		on topo.fid = sub.fid
+	) as streams
+left join
+	(
+		select dn as basin_id, geom from riks_50m.subbasins as bas
+	) as basins
+on basins.basin_id = streams.basin_id;
+
+
+-- länka segment med drivingdistance
+select * from pgr_drivingDistance(
+	'select id, source, target, 0 as cost from riks_50m.streamswithsubbasinid_3006_noded',
+	4862,
+	1
+)
+left join
+riks_50m.streamswithsubbasinid_3006_noded
+on edge = id;
+
+
+-- länka uppströms segment med drivingdistance
+
+select  from
+(
+	select * from pgr_drivingDistance(
+		'select id, target as source, source as target, 0 as cost from riks_50m.streamswithsubbasinid_3006_noded',
+		4549,
+		1
+	)
+	left join
+	riks_50m.streamswithsubbasinid_3006_noded
+	on edge = id
+	left join
+	(
+		select geom as basingeom, dn from
+		riks_50m.subbasins
+	) as basins
+	on old_id = basins.dn
+) as t
+"""
